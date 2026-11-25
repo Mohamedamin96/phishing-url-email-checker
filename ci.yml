@@ -1,2 +1,45 @@
-name: ci
-on:[push]
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov ruff httpx
+
+      - name: Check Python syntax
+        run: |
+          python -m py_compile analyzer.py
+          python -m py_compile main.py
+          python -m py_compile routes.py
+          python -m py_compile schemas.py
+
+      - name: Lint with Ruff
+        run: |
+          ruff check *.py
+
+      - name: Run tests
+        run: |
+          pytest -v
+
+      - name: Run tests with coverage
+        run: |
+          pytest --cov=. --cov-report=term-missing
