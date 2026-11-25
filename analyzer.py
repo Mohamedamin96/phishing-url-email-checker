@@ -1,4 +1,6 @@
-import re, urllib.parse
+import re
+import urllib.parse
+
 SHORT=['bit.ly','tinyurl.com','t.co']
 def level(s):
  return 'CRITICAL' if s>=75 else 'HIGH' if s>=50 else 'MEDIUM' if s>=25 else 'LOW'

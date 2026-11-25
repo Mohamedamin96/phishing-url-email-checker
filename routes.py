@@ -1,6 +1,7 @@
+from app.models.schemas import EmailRequest, URLRequest
+from app.services.analyzer import analyze_email, analyze_url
 from fastapi import APIRouter
-from app.models.schemas import URLRequest,EmailRequest
-from app.services.analyzer import analyze_url, analyze_email
+
 router=APIRouter()
 @router.get('/health')
 def health(): return {'status':'ok'}

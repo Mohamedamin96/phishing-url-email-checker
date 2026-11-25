@@ -1,4 +1,4 @@
-from analyzer import analyze_url, analyze_email
+from analyzer import analyze_email, analyze_url
 
 
 def test_normal_url():
